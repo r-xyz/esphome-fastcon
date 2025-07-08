@@ -145,6 +145,7 @@ namespace esphome
             // TODO: need to figure out when esphome is changing to white vs setting brightness
 
             auto values = state->current_values;
+            
 
             bool is_on = values.is_on();
             if (!is_on)
@@ -153,6 +154,7 @@ namespace esphome
             }
 
             auto color_mode = values.get_color_mode();
+            ESP_LOGV(TAG, "values: %d", color_mode);
             bool has_white = (static_cast<uint8_t>(color_mode) & static_cast<uint8_t>(light::ColorCapability::WHITE)) != 0;
             float brightness = std::min(values.get_brightness() * 127.0f, 127.0f); // clamp the value to at most 127
             light_data[0] = 0x80 + static_cast<uint8_t>(brightness);
